@@ -3,7 +3,9 @@ const path = require('path');
 
 // Create an Express application
 const app = express();
-const frontendStaticPath = '../../frontend';
+const frontendStaticPath = path.join(__dirname, '../../frontend'); // Use path.join to ensure correct path resolution
+const pagesStaticPath = path.join(__dirname, '../../frontend/pages'); // Use path.join to ensure correct path resolution
+
 // Define middleware
 app.use(express.json()); // Parse JSON request bodies
 app.use(express.urlencoded({ extended: true })); // Parse URL-encoded request bodies
@@ -13,7 +15,16 @@ app.use(express.static(frontendStaticPath));
 
 // Define routes
 app.get('/', (req, res) => {
-    res.send('Hello, World!');
+    console.log('/')
+    res.sendFile(path.join(frontendStaticPath, 'index.js'));
+});
+
+app.get('/homescreen', (req, res) => {
+    res.sendFile(path.join(pagesStaticPath, 'homescreen.html'));
+});
+
+app.get('/scene1', (req, res) => {
+    res.sendFile(path.join(pagesStaticPath, 'scene1.html'));
 });
 
 // Define error handling middleware
